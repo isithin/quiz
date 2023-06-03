@@ -81,28 +81,14 @@ public class Selection {
         return true;
     }
 
-    public int getId() {
-        String digit = "";
-        String info = list.getSelectedValue();
-        Pattern pattern = Pattern.compile("(\\d+$)");
-        Matcher matcher = pattern.matcher(info);
-        if (matcher.find()) {
-            digit = matcher.group(1);
-        }
-
-        int res = Integer.parseInt(digit);
-
-        return res;
-    }
-
     class DeleteQuiz implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent arg0) {
             if (validateSelection()) {
-                if(player.validateQuiz(getId())) {
+                if(player.validateQuiz(list.getSelectedValue())) {
                    int confirmation = JOptionPane.showConfirmDialog(null, "Sure?");
                    if (confirmation == JOptionPane.YES_OPTION) {
-                       if (player.deleteQuiz(getId())) {
+                       if (player.deleteQuiz(list.getSelectedValue())) {
                            JOptionPane.showMessageDialog(null, "Success");
                            frame.setVisible(false);
                            frame.dispose();
@@ -122,14 +108,14 @@ public class Selection {
         @Override
         public void actionPerformed(ActionEvent arg0) {
             if(validateSelection()) {
-                if(player.validateQuiz(getId())) {
+                if(player.validateQuiz(list.getSelectedValue())) {
                     String username = JOptionPane.showInputDialog("Enter username: ");
                     if (username.length() == 0) {
                         JOptionPane.showMessageDialog(null, "You have to enter a username.");
                     } else {
                         frame.setVisible(false);
                         frame.dispose();
-                        player.newAttempt(username, getId());
+                        player.newAttempt(username, list.getSelectedValue());
                     }
                 }
             } else {

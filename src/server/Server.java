@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -16,14 +17,14 @@ import quiz.Attempt;
 import quiz.Quiz;
 
 public class Server extends UnicastRemoteObject implements RemoteInterface {
-    private HashMap<Integer, Quiz> quizzes = new HashMap<Integer, Quiz>();
+    private ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
 
     public Server() throws RemoteException {
         super();
         File data = new File("Data.txt");
         if (data.exists()) {
             try(ObjectInputStream input = new ObjectInputStream(new FileInputStream(data))) {
-                quizzes = (HashMap<Integer,Quiz>) input.readObject();
+                quizzes = (ArrayList) input.readObject();
                 System.out.println("Loading Quizzes");
             } catch(IOException e) {
                 e.printStackTrace();
@@ -33,44 +34,53 @@ public class Server extends UnicastRemoteObject implements RemoteInterface {
         }
     }
 
-    public boolean addQuiz(Quiz newquiz, int id) {
-        quizzes.put(id, newquiz);
+    public boolean addQuiz(Quiz newquiz) {
+        quizzes.add(newquiz);
         flush();
         System.out.println("Quiz added");
         return true;
     }
 
-    public Quiz getQuiz(int id) {
-        return (Quiz) quizzes.get(id);
-    }
-
-    public boolean deleteQuiz(int id) {
-        quizzes.remove(id);
-        flush();
-        System.out.println("Quiz deleted");
-        return true;
-        
-    }
-
-    public synchronized int setQuizId() {
-        Set<Integer> keySet = quizzes.keySet();
-        int id = 1;
-        boolean found = false;
-        while (!found) {
-            if (keySet.contains(id)) {
-                id++;
-            } else {
-                found = true;
+    public Quiz getQuiz(String name) {
+        for (Quiz quiz: quizzes) {
+            if (quiz.getName().equals(name)) {
+                return quiz;
             }
         }
-        return id;
+        return null;
     }
+
+    public boolean deleteQuiz(String name) {
+        for (Quiz quiz: quizzes) {
+            if (quiz.getName().equals(name)) {
+                quizzes.remove(quiz);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+        public synchronized int setQuizId() {
+            Set<Integer> keySet = quizzes.keySet();
+            int id = 1;
+            boolean found = false;
+            while (!found) {
+                if (keySet.contains(id)) {
+                    id++;
+                } else {
+                    found = true;
+                }
+            }
+            return id;
+        }
+    */
 
     public String[] getQuizzesString() {
         int pos = 0;
         String[] quizlist = new String[quizzes.size()];
-            for (Quiz quiz: quizzes.values()) {
-                quizlist[pos] = new String("[Quiz id: ]" + quiz.getId());
+            for (Quiz quiz: quizzes) {
+                quizlist[pos] = new String(quiz.getName());
                 pos++;
             }
         return quizlist;

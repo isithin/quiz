@@ -6,13 +6,13 @@ import java.rmi.RemoteException;
 
 public interface RemoteInterface extends Remote{
     
-    public boolean addQuiz(Quiz quiz, int id) throws RemoteException;
+    public boolean addQuiz(Quiz quiz) throws RemoteException;
 
-    public boolean deleteQuiz(int id) throws RemoteException;
+    public boolean deleteQuiz(String name) throws RemoteException;
 
-    public Quiz getQuiz(int id) throws RemoteException;
+    public Quiz getQuiz(String name) throws RemoteException;
 
-    public int setQuizId() throws RemoteException;
+    //public int setQuizId() throws RemoteException;
 
     public String[] getQuizzesString() throws RemoteException;
 

@@ -4,7 +4,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import javax.swing.JOptionPane;
-import javax.xml.catalog.Catalog;
 import java.rmi.NotBoundException;
 import gui.*;
 import server.*;
@@ -40,28 +39,26 @@ public class Player {
         String[] quizzes = null;
         try {
             quizzes = remoteInterface.getQuizzesString();
-            System.out.println(remoteInterface.getQuizzesString());
-
         } catch (RemoteException e) {
             e.printStackTrace();
         }
         return quizzes;
     }
 
-    public boolean deleteQuiz(int id) {
+    public boolean deleteQuiz(String name) {
         boolean success = false;
         try {
-            success = remoteInterface.deleteQuiz(id);
+            success = remoteInterface.deleteQuiz(name);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
         return success;
     }
 
-    public void newAttempt(String username, int id) {
+    public void newAttempt(String username, String name) {
         attempt = new Attempt(username);
         try {
-            activeQuiz = remoteInterface.getQuiz(id);
+            activeQuiz = remoteInterface.getQuiz(name);
             //remoteInterface.addActiveQuiz(id);
             nextQuestion();
         } catch (RemoteException e) {
@@ -107,9 +104,9 @@ public class Player {
         score++;
     }
 
-    public boolean validateQuiz(int id) {
+    public boolean validateQuiz(String name) {
         try {
-            if (remoteInterface.getQuiz(id) == null) {
+            if (remoteInterface.getQuiz(name) == null) {
                 return false;
             }
         } catch (RemoteException e) {
@@ -118,10 +115,10 @@ public class Player {
         return true;
     }
 
-    public void highcore(int id) {
+    public void highcore(String name) {
         Quiz quizScores;
         try {
-            quizScores = remoteInterface.getQuiz(id);
+            quizScores = remoteInterface.getQuiz(name);
             String[] allScores = new String[quizScores.getAttempts().size()];
             int position = 0;
             for (Attempt attempts: quizScores.getAttempts()) {

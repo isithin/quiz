@@ -5,8 +5,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import javax.lang.model.element.QualifiedNameable;
-
 import gui.EnterQuestion;
 import gui.NamingQuiz;
 import quiz.Question;
@@ -29,8 +27,8 @@ public class Editor {
 
     public void addToServer() {
         try {
-            newQuiz.setId(remoteInterface.setQuizId());
-            remoteInterface.addQuiz(newQuiz, newQuiz.getId());
+            //newQuiz.setId(remoteInterface.setQuizId());
+            remoteInterface.addQuiz(newQuiz);
         } catch (Exception e) {
             e.printStackTrace();
         }
