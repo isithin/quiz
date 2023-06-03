@@ -84,8 +84,6 @@ public class Selection {
     public int getId() {
         String digit = "";
         String info = list.getSelectedValue();
-        //int pos = info.indexOf("[Quiz id]: ");
-        //System.out.println(pos);
         Pattern pattern = Pattern.compile("(\\d+$)");
         Matcher matcher = pattern.matcher(info);
         if (matcher.find()) {

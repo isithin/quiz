@@ -70,7 +70,7 @@ public class Server extends UnicastRemoteObject implements RemoteInterface {
         int pos = 0;
         String[] quizlist = new String[quizzes.size()];
             for (Quiz quiz: quizzes.values()) {
-                quizlist[pos] = new String("[Quiz id]: " + quiz.getId());
+                quizlist[pos] = new String("[Quiz id: ]" + quiz.getId());
                 pos++;
             }
         return quizlist;
