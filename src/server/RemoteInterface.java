@@ -16,7 +16,7 @@ public interface RemoteInterface extends Remote{
 
     public String[] getQuizzesString() throws RemoteException;
 
-    public void addHighscore(Attempt attempt, int id) throws RemoteException;
+    public void addHighscore(Attempt attempt, String name) throws RemoteException;
 
     //public void addActiveQuiz(int id) throws RemoteException;
 

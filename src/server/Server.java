@@ -10,8 +10,6 @@ import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
 
 import quiz.Attempt;
 import quiz.Quiz;
@@ -86,9 +84,13 @@ public class Server extends UnicastRemoteObject implements RemoteInterface {
         return quizlist;
     }
 
-    public void addHighscore(Attempt score, int id) {
-        quizzes.get(id).setAttempt(score);
-        flush();
+    public void addHighscore(Attempt score, String name) {
+        for (Quiz quiz: quizzes) {
+            if (quiz.getName().equals(name)) {
+                quiz.setAttempt(score);
+                flush();
+            }
+        }
     }
 
     private void flush() {

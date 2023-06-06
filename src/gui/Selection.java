@@ -12,8 +12,6 @@ import javax.swing.SwingConstants;
 import controller.Player;
 
 import java.awt.event.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Selection {
     private JFrame frame;

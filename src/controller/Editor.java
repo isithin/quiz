@@ -46,7 +46,7 @@ public class Editor {
     public void connect() {
         try {
 			Registry reg = LocateRegistry.getRegistry("localhost", 1099);
-			remoteInterface = (RemoteInterface) reg.lookup("Quizzer");
+			remoteInterface = (RemoteInterface) reg.lookup("Quizzler");
 			System.out.println("Connected.");
 		} catch (RemoteException e) {
 			e.printStackTrace();

@@ -6,7 +6,6 @@ import java.util.Collections;
 
 public class Quiz implements Serializable {
     private String name;
-    private int id;
     private ArrayList<Question> questions = new ArrayList<Question>();
     private ArrayList<Attempt> scores = new ArrayList<Attempt>();
 
@@ -16,14 +15,6 @@ public class Quiz implements Serializable {
 
     public String getName() {
         return this.name;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return this.id;
     }
 
     public void setQuestion(Question question) {

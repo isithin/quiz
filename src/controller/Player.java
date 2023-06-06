@@ -24,7 +24,7 @@ public class Player {
     public void connect() {
         try {
 			Registry reg = LocateRegistry.getRegistry("localhost", 1099);
-			remoteInterface = (RemoteInterface) reg.lookup("Quizzer");
+			remoteInterface = (RemoteInterface) reg.lookup("Quizzler");
 			System.out.println("successfully connected to server");
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -70,6 +70,7 @@ public class Player {
         if (count < activeQuiz.getQuestionsInt()) {
             Question question = activeQuiz.getQuestions().get(count);
             new AnswerQuestion(this, question, count+1).launch();
+            count++;
         } else {
             finalMessage();
             storeAttempt();
@@ -90,7 +91,7 @@ public class Player {
     public void storeAttempt() {
         attempt.setScore(score);
         try{
-            remoteInterface.addHighscore(attempt, activeQuiz.getId());
+            remoteInterface.addHighscore(attempt, activeQuiz.getName());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
